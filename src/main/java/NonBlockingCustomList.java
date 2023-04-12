@@ -3,7 +3,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
-public class CustomList<T> implements ICollection<T> {
+public class NonBlockingCustomList<T> implements ICollection<T> {
     private int size;
     private Node<T> head;
     private Node<T> tail;
@@ -220,7 +220,7 @@ public class CustomList<T> implements ICollection<T> {
         int temp = size;
         for (Node<T> cur = tail; cur != null; cur = cur.prev) {
             if(cur.data.equals(obj)) {
-                remove(obj);
+                removeNode(cur);
             }
         }
         return temp != size;
@@ -252,26 +252,17 @@ public class CustomList<T> implements ICollection<T> {
         } while (!swapped);
     }
 
-    private void swap(int index1, int index2) {
-        Node<T> nodeOnIndex1 = getNodeByIndex(index1);
-        Node<T> nodeOnIndex2 = getNodeByIndex(index2);
-        T tempObj = nodeOnIndex1.data;
-        nodeOnIndex1.data = nodeOnIndex2.data;
-        nodeOnIndex2.data = tempObj;
-    }
-
     @Override
     public boolean removeIf(Predicate<T> predicate) {
         int temp = size;
         for (Node<T> cur = head; cur != null; cur = cur.next) {
             if (predicate.test(cur.data)) {
-                removeAll(cur.data);
+                removeNode(cur);
             }
         }
         return temp != size;
     }
 
-    //TODO
     @Override
     public int indexOf(Predicate<T> predicate) {
         for (Node<T> cur = head; cur != null; cur = cur.next) {
@@ -300,7 +291,7 @@ public class CustomList<T> implements ICollection<T> {
     @Override
     public void clear() {
         for(Node<T> cur = head; cur != null; cur = cur.next) {
-            removeAll(cur.data);
+            removeNode(cur);
         }
     }
 
@@ -321,5 +312,27 @@ public class CustomList<T> implements ICollection<T> {
                 return obj;
             }
         };
+    }
+
+    private void removeNode(Node<T> node) {
+        if(node.prev == null) {
+            head = node.next;
+            node.next.prev = head;
+        } else if (node.next == null) {
+            tail = node.prev;
+            node.prev.next = tail;
+        } else {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+        }
+        size--;
+    }
+
+    private void swap(int index1, int index2) {
+        Node<T> nodeOnIndex1 = getNodeByIndex(index1);
+        Node<T> nodeOnIndex2 = getNodeByIndex(index2);
+        T tempObj = nodeOnIndex1.data;
+        nodeOnIndex1.data = nodeOnIndex2.data;
+        nodeOnIndex2.data = tempObj;
     }
 }

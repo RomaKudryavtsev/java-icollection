@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CustomListTest {
+public class NonBlockingCustomListTest {
     private ICollection<Integer> numbers;
     private final Integer[] arrNumbers = {10, 7, 11, -2, 13, 10, 2000};
     private final BiFunction<Integer, Integer, Predicate<Integer>> getPredicateSearchingNumInRange = (n1, n2) ->
@@ -16,7 +16,7 @@ public class CustomListTest {
 
     @BeforeEach
     void setUp() {
-        numbers = new CustomList<>();
+        numbers = new NonBlockingCustomList<>();
         Arrays.stream(arrNumbers).forEach(n -> numbers.add(n));
     }
 
