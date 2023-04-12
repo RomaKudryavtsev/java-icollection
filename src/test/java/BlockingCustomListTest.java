@@ -27,7 +27,7 @@ public class BlockingCustomListTest {
     @Test
     void testIterator() {
         int index = 0;
-        for(Integer i : numbers) {
+        for (Integer i : numbers) {
             assertEquals(i, arrNumbers[index++]);
         }
     }
@@ -255,5 +255,4 @@ public class BlockingCustomListTest {
         executorService.awaitTermination(1, TimeUnit.MINUTES);
         assertEquals(0, numbers.size());
     }
-
 }

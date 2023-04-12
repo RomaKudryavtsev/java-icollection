@@ -47,10 +47,10 @@ public class NonBlockingCustomList<T> implements ICollection<T> {
 
     @Override
     public boolean add(int index, T obj) {
-        if(checkIfObjectIsNull(obj) || checkIfIndexIsIncorrect(index)) {
+        if (checkIfObjectIsNull(obj) || checkIfIndexIsIncorrect(index)) {
             return false;
         }
-        if(index == 0) {
+        if (index == 0) {
             Node<T> oldHead = head;
             head = new Node<>(obj, null, oldHead);
             head.next = oldHead;
@@ -73,7 +73,7 @@ public class NonBlockingCustomList<T> implements ICollection<T> {
 
     @Override
     public T get(int index) {
-        if(checkIfIndexIsIncorrect(index)) {
+        if (checkIfIndexIsIncorrect(index)) {
             throw new IllegalArgumentException("Wrong index");
         }
         Node<T> node = getNodeByIndex(index);
@@ -148,7 +148,7 @@ public class NonBlockingCustomList<T> implements ICollection<T> {
 
     @Override
     public T remove(int index) {
-        if(checkIfIndexIsIncorrect(index)) {
+        if (checkIfIndexIsIncorrect(index)) {
             throw new IllegalArgumentException("Wrong index");
         }
         Node<T> removed = getNodeByIndex(index);
@@ -171,7 +171,7 @@ public class NonBlockingCustomList<T> implements ICollection<T> {
 
     @Override
     public boolean remove(T obj) {
-        if(checkIfObjectIsNull(obj)) {
+        if (checkIfObjectIsNull(obj)) {
             return false;
         }
         int indexRemoved = indexOf(obj);
@@ -189,7 +189,7 @@ public class NonBlockingCustomList<T> implements ICollection<T> {
         Object[] arr = new Object[size];
         Iterator<T> it = this.iterator();
         int index = 0;
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             arr[index] = it.next();
             index++;
         }
@@ -198,7 +198,7 @@ public class NonBlockingCustomList<T> implements ICollection<T> {
 
     @Override
     public boolean set(T obj, int index) {
-        if(checkIfObjectIsNull(obj) || checkIfIndexIsIncorrect(index)) {
+        if (checkIfObjectIsNull(obj) || checkIfIndexIsIncorrect(index)) {
             return false;
         }
         Node<T> nodeToBeModified = getNodeByIndex(index);
@@ -219,7 +219,7 @@ public class NonBlockingCustomList<T> implements ICollection<T> {
         }
         int temp = size;
         for (Node<T> cur = tail; cur != null; cur = cur.prev) {
-            if(cur.data.equals(obj)) {
+            if (cur.data.equals(obj)) {
                 removeNode(cur);
             }
         }
@@ -290,7 +290,7 @@ public class NonBlockingCustomList<T> implements ICollection<T> {
 
     @Override
     public void clear() {
-        for(Node<T> cur = head; cur != null; cur = cur.next) {
+        for (Node<T> cur = head; cur != null; cur = cur.next) {
             removeNode(cur);
         }
     }
@@ -315,7 +315,7 @@ public class NonBlockingCustomList<T> implements ICollection<T> {
     }
 
     private void removeNode(Node<T> node) {
-        if(node.prev == null) {
+        if (node.prev == null) {
             head = node.next;
             node.next.prev = head;
         } else if (node.next == null) {

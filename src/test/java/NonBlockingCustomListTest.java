@@ -23,7 +23,7 @@ public class NonBlockingCustomListTest {
     @Test
     void testIterator() {
         int index = 0;
-        for(Integer i : numbers) {
+        for (Integer i : numbers) {
             assertEquals(i, arrNumbers[index++]);
         }
     }
