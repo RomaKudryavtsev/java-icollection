@@ -5,7 +5,7 @@ public class BlockingCustomList<T> implements ICollection<T> {
     private volatile int size;
     private Node<T> head;
     private Node<T> tail;
-    private Object lock = new Object();
+    private final Object lock = new Object();
 
     private static class Node<T> {
         T data;
