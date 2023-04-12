@@ -1,3 +1,5 @@
+package collection_domain;
+
 import java.util.Comparator;
 import java.util.function.Predicate;
 

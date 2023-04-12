@@ -1,3 +1,7 @@
+package collection_domain.array;
+
+import collection_domain.ICollection;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;

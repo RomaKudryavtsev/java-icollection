@@ -1,3 +1,7 @@
+package collection_domain.list;
+
+import collection_domain.ICollection;
+
 import java.util.*;
 import java.util.function.Predicate;
 

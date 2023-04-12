@@ -1,3 +1,6 @@
+import collection_domain.array.CustomArray;
+import collection_domain.ICollection;
+import collection_domain.list.NonBlockingCustomList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
