@@ -193,77 +193,91 @@ public class BlockingCustomList<T> implements ICollection<T> {
     }
 
     @Override
-    public synchronized boolean set(T obj, int index) {
+    public boolean set(T obj, int index) {
         if (checkIfObjectIsNull(obj) || checkIfIndexIsIncorrect(index)) {
             return false;
         }
-        Node<T> nodeToBeModified = getNodeByIndex(index);
-        nodeToBeModified.data = obj;
+        synchronized (lock) {
+            Node<T> nodeToBeModified = getNodeByIndex(index);
+            nodeToBeModified.data = obj;
+        }
         return true;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public synchronized void addAll(ICollection<T> other) {
-        Arrays.stream(other.toArray()).map(o -> (T) o).forEach(this::add);
+    public void addAll(ICollection<T> other) {
+        synchronized (lock) {
+            Arrays.stream(other.toArray()).map(o -> (T) o).forEach(this::add);
+        }
     }
 
     @Override
-    public synchronized boolean removeAll(T obj) {
+    public boolean removeAll(T obj) {
         if (checkIfObjectIsNull(obj)) {
             return false;
         }
-        int temp = size;
-        for (Node<T> cur = tail; cur != null; cur = cur.prev) {
-            if (cur.data.equals(obj)) {
-                removeNode(cur);
+        synchronized (lock) {
+            int temp = size;
+            for (Node<T> cur = tail; cur != null; cur = cur.prev) {
+                if (cur.data.equals(obj)) {
+                    removeNode(cur);
+                }
             }
+            return temp != size;
         }
-        return temp != size;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public synchronized void addAll(ICollection<T> other, int index) {
-        final int[] indexCopy = {index};
-        Arrays.stream(other.toArray()).map(o -> (T) o).forEach(t -> {
-            this.add(indexCopy[0], t);
-            ++indexCopy[0];
-        });
+        synchronized (lock) {
+            final int[] indexCopy = {index};
+            Arrays.stream(other.toArray()).map(o -> (T) o).forEach(t -> {
+                this.add(indexCopy[0], t);
+                ++indexCopy[0];
+            });
+        }
     }
 
     @Override
-    public synchronized void sort(Comparator<T> comp) {
-        boolean swapped;
-        int index = size - 1;
-        do {
-            swapped = true;
-            for (int i = 0; i < index; ++i) {
-                if (comp.compare(getNodeByIndex(i).data, getNodeByIndex(i + 1).data) > 0) {
-                    swap(i, i + 1);
-                    swapped = false;
+    public void sort(Comparator<T> comp) {
+        synchronized (lock) {
+            boolean swapped;
+            int index = size - 1;
+            do {
+                swapped = true;
+                for (int i = 0; i < index; ++i) {
+                    if (comp.compare(getNodeByIndex(i).data, getNodeByIndex(i + 1).data) > 0) {
+                        swap(i, i + 1);
+                        swapped = false;
+                    }
+                }
+                --index;
+            } while (!swapped);
+        }
+    }
+
+    @Override
+    public boolean removeIf(Predicate<T> predicate) {
+        synchronized (lock) {
+            int temp = size;
+            for (Node<T> cur = head; cur != null; cur = cur.next) {
+                if (predicate.test(cur.data)) {
+                    removeNode(cur);
                 }
             }
-            --index;
-        } while (!swapped);
-    }
-
-    @Override
-    public synchronized boolean removeIf(Predicate<T> predicate) {
-        int temp = size;
-        for (Node<T> cur = head; cur != null; cur = cur.next) {
-            if (predicate.test(cur.data)) {
-                removeNode(cur);
-            }
+            return temp != size;
         }
-        return temp != size;
     }
 
     @Override
     public int indexOf(Predicate<T> predicate) {
-        for (Node<T> cur = head; cur != null; cur = cur.next) {
-            if (predicate.test(cur.data)) {
-                return indexOf(cur.data);
+        synchronized (lock) {
+            for (Node<T> cur = head; cur != null; cur = cur.next) {
+                if (predicate.test(cur.data)) {
+                    return indexOf(cur.data);
+                }
             }
         }
         return -1;
@@ -271,9 +285,11 @@ public class BlockingCustomList<T> implements ICollection<T> {
 
     @Override
     public int lastIndexOf(Predicate<T> predicate) {
-        for (Node<T> cur = tail; cur != null; cur = cur.prev) {
-            if (predicate.test(cur.data)) {
-                return lastIndexOf(cur.data);
+        synchronized (lock) {
+            for (Node<T> cur = tail; cur != null; cur = cur.prev) {
+                if (predicate.test(cur.data)) {
+                    return lastIndexOf(cur.data);
+                }
             }
         }
         return -1;
@@ -285,9 +301,11 @@ public class BlockingCustomList<T> implements ICollection<T> {
     }
 
     @Override
-    public synchronized void clear() {
-        for (Node<T> cur = head; cur != null; cur = cur.next) {
-            removeNode(cur);
+    public void clear() {
+        synchronized (lock) {
+            for (Node<T> cur = head; cur != null; cur = cur.next) {
+                removeNode(cur);
+            }
         }
     }
 
@@ -310,25 +328,23 @@ public class BlockingCustomList<T> implements ICollection<T> {
         this.tail = newTail;
     }
 
-    private Node<T> getNodeByIndex(int index) {
+    private synchronized Node<T> getNodeByIndex(int index) {
         if (checkIfIndexIsIncorrect(index)) {
             throw new IllegalArgumentException("Wrong index");
         }
-        synchronized (lock) {
-            Node<T> current;
-            if (index <= size / 2) {
-                current = head;
-                for (int i = 0; i < index; i++) {
-                    current = current.next;
-                }
-            } else {
-                current = tail;
-                for (int i = size - 1; i > index; i--) {
-                    current = current.prev;
-                }
+        Node<T> current;
+        if (index <= size / 2) {
+            current = head;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
             }
-            return current;
+        } else {
+            current = tail;
+            for (int i = size - 1; i > index; i--) {
+                current = current.prev;
+            }
         }
+        return current;
     }
 
     private synchronized void removeNode(Node<T> node) {
