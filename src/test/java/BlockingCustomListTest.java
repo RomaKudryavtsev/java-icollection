@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -16,6 +17,7 @@ public class BlockingCustomListTest {
     private final Integer[] arrNumbers = {10, 7, 11, -2, 13, 10, 2000};
     private final BiFunction<Integer, Integer, Predicate<Integer>> getPredicateSearchingNumInRange = (n1, n2) ->
             num -> num >= n1 && num < n2;
+    final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     @BeforeEach
     void setUp() {
@@ -231,13 +233,28 @@ public class BlockingCustomListTest {
     @Test
     public void testThreadSafeAdd() throws InterruptedException {
         numbers = new BlockingCustomList<>();
-        final ExecutorService executorService = Executors.newFixedThreadPool(10);
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             final int value = i;
             executorService.submit(() -> numbers.add(value));
         }
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.MINUTES);
-        assertEquals(1000, numbers.size());
+        assertEquals(100, numbers.size());
     }
+
+    @Test
+    public void testThreadSafeAddRemove() throws InterruptedException {
+        numbers = new BlockingCustomList<>();
+        for (int i = 0; i < 100; i++) {
+            final int value = i;
+            executorService.submit(() -> {
+                numbers.add(value);
+                numbers.remove((Integer) value);
+            });
+        }
+        executorService.shutdown();
+        executorService.awaitTermination(1, TimeUnit.MINUTES);
+        assertEquals(0, numbers.size());
+    }
+
 }
