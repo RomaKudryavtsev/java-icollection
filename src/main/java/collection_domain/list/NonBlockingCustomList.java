@@ -240,6 +240,7 @@ public class NonBlockingCustomList<T> implements ICollection<T> {
         });
     }
 
+    //TODO: iterate through nodes without indexes
     @Override
     public void sort(Comparator<T> comp) {
         boolean swapped;
