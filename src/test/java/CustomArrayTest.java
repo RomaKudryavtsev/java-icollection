@@ -1,6 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import collection_domain.array.CustomArray;
+import collection_domain.indexed_domain.array_list.CustomArray;
 import collection_domain.ICollection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
