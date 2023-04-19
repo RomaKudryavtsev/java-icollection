@@ -82,6 +82,40 @@ public class CustomSet<T> implements ICollection<T> {
     }
 
     @Override
+    public boolean removeIf(Predicate<T> predicate) {
+        if (predicate == null) {
+            return false;
+        } else {
+            CustomSet<T> temp = new CustomSet<>(this.capacity);
+            this.forEach(e -> {
+                if (!predicate.test(e)) {
+                    temp.add(e);
+                }
+            });
+            this.size = temp.size;
+            this.table = temp.table;
+            return true;
+        }
+    }
+
+    @Override
+    public boolean retainAll(Collection<T> c) {
+        if (c == null) {
+            return false;
+        } else {
+            CustomSet<T> temp = new CustomSet<>(this.capacity);
+            this.forEach(e -> {
+                if (c.contains(e)) {
+                    temp.add(e);
+                }
+            });
+            this.size = temp.size;
+            this.table = temp.table;
+            return true;
+        }
+    }
+
+    @Override
     public Object[] toArray() {
         Object[] res = new Object[size];
         int index = 0;
@@ -163,31 +197,13 @@ public class CustomSet<T> implements ICollection<T> {
         if (c == null) {
             return false;
         } else {
-            c.forEach(this::add);
-            return true;
-        }
-    }
-
-    //TODO: to be implemented
-    @Override
-    public boolean removeIf(Predicate<T> predicate) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<T> c) {
-        if (c == null) {
-            return false;
-        } else {
-            CustomSet<T> temp = new CustomSet<>(this.capacity);
-            this.forEach(e -> {
-                if (c.contains(e)) {
-                    temp.add(e);
+            final boolean[] flag = {true};
+            c.forEach(e -> {
+                if (!add(e)) {
+                    flag[0] = false;
                 }
             });
-            this.size = temp.size;
-            this.table = temp.table;
-            return true;
+            return flag[0];
         }
     }
 
@@ -196,8 +212,13 @@ public class CustomSet<T> implements ICollection<T> {
         if (c == null) {
             return false;
         } else {
-            c.forEach(this::remove);
-            return true;
+            final boolean[] flag = {true};
+            c.forEach(e -> {
+                if (!remove(e)) {
+                    flag[0] = false;
+                }
+            });
+            return flag[0];
         }
     }
 

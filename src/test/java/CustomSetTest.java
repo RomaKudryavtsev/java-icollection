@@ -42,9 +42,8 @@ class CustomSetTest {
 
     @Test
     void iterator() {
-        Iterator<Integer> iterator = customSet.iterator();
-        while (iterator.hasNext()) {
-            assertTrue(expected.contains(iterator.next()));
+        for (Integer integer : customSet) {
+            assertTrue(expected.contains(integer));
         }
     }
 
@@ -92,9 +91,8 @@ class CustomSetTest {
         List<Integer> toBeAdded = new ArrayList<>(Arrays.asList(100, 200));
         customSet.addAll(toBeAdded);
         assertEquals(expected.size(), customSet.size());
-        Iterator<Integer> iterator = expected.iterator();
-        while (iterator.hasNext()) {
-            assertTrue(customSet.contains(iterator.next()));
+        for (Integer integer : expected) {
+            assertTrue(customSet.contains(integer));
         }
     }
 
@@ -103,9 +101,8 @@ class CustomSetTest {
         List<Integer> toBeRetained = List.of(2, 3, 5);
         customSet.retainAll(toBeRetained);
         assertEquals(toBeRetained.size(), customSet.size());
-        Iterator<Integer> iterator = toBeRetained.iterator();
-        while (iterator.hasNext()) {
-            assertTrue(customSet.contains(iterator.next()));
+        for (Integer integer : toBeRetained) {
+            assertTrue(customSet.contains(integer));
         }
     }
 
@@ -115,8 +112,18 @@ class CustomSetTest {
         List<Integer> toBeRemoved = List.of(2, 3, 5);
         customSet.removeAll(toBeRemoved);
         assertEquals(expected.size(), customSet.size());
+        for (Integer integer : expected) {
+            assertTrue(customSet.contains(integer));
+        }
+    }
+
+    @Test
+    void removeIf() {
+        List<Integer> expected = new ArrayList<>(List.of(7, 11, 13, 17, 19));
+        customSet.removeIf(e -> e <= 5);
         Iterator<Integer> iterator = expected.iterator();
-        while (iterator.hasNext()) {
+        assertEquals(expected.size(), customSet.size());
+        while(iterator.hasNext()) {
             assertTrue(customSet.contains(iterator.next()));
         }
     }
