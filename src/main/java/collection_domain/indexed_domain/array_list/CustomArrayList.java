@@ -2,7 +2,6 @@ package collection_domain.indexed_domain.array_list;
 
 import collection_domain.ICollection;
 import collection_domain.indexed_domain.AbstractList;
-import collection_domain.indexed_domain.ICollectionIndexed;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,24 +9,16 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
-public class CustomArray<T> extends AbstractList implements ICollectionIndexed<T> {
+public class CustomArrayList<T> extends AbstractList<T> {
     private final static int DEFAULT_CAPACITY = 16;
     private Object[] array;
 
-    public CustomArray(int capacity) {
+    public CustomArrayList(int capacity) {
         array = new Object[capacity];
     }
 
-    public CustomArray() {
+    public CustomArrayList() {
         this(DEFAULT_CAPACITY);
-    }
-
-    private boolean checkIfObjectIsNull(T obj) {
-        return obj == null;
-    }
-
-    private boolean checkIfIndexIsIncorrect(int index) {
-        return index < 0 || index >= size;
     }
 
     private void allocateArray() {
@@ -103,7 +94,7 @@ public class CustomArray<T> extends AbstractList implements ICollectionIndexed<T
     @SuppressWarnings("unchecked")
     public T remove(int index) {
         if (checkIfIndexIsIncorrect(index)) {
-            return null;
+            throw new IllegalArgumentException("Wrong index");
         }
         T objToBeDeleted = (T) array[index];
         if (index < size - 1) {
@@ -111,16 +102,6 @@ public class CustomArray<T> extends AbstractList implements ICollectionIndexed<T
         }
         --size;
         return objToBeDeleted;
-    }
-
-    @Override
-    public boolean remove(T obj) {
-        return remove(indexOf(obj)) != null;
-    }
-
-    @Override
-    public boolean contains(T obj) {
-        return indexOf(obj) >= 0;
     }
 
     @Override
@@ -134,15 +115,6 @@ public class CustomArray<T> extends AbstractList implements ICollectionIndexed<T
             return false;
         }
         array[index] = obj;
-        return true;
-    }
-
-    @Override
-    public boolean addAll(Collection<T> other) {
-        if(other == null) {
-            return false;
-        }
-        other.forEach(this::add);
         return true;
     }
 

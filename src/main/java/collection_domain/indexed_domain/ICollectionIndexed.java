@@ -5,7 +5,7 @@ import collection_domain.ICollection;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
-public interface ICollectionIndexed<T> extends Iterable<T>, ICollection<T> {
+public interface ICollectionIndexed<T> extends ICollection<T> {
     boolean add(int index, T obj);
 
     T get(int index);

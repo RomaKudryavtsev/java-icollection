@@ -2,7 +2,6 @@ package collection_domain.indexed_domain.linked_list;
 
 import collection_domain.ICollection;
 import collection_domain.indexed_domain.AbstractList;
-import collection_domain.indexed_domain.ICollectionIndexed;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,7 +9,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
-public class NonBlockingCustomList<T> extends AbstractList implements ICollectionIndexed<T> {
+public class NonBlockingCustomList<T> extends AbstractList<T> {
     private Node<T> head;
     private Node<T> tail;
 
@@ -24,14 +23,6 @@ public class NonBlockingCustomList<T> extends AbstractList implements ICollectio
             this.prev = previous;
             this.next = next;
         }
-    }
-
-    private boolean checkIfObjectIsNull(T obj) {
-        return obj == null;
-    }
-
-    private boolean checkIfIndexIsIncorrect(int index) {
-        return index < 0 || index >= size;
     }
 
     @Override
@@ -171,21 +162,6 @@ public class NonBlockingCustomList<T> extends AbstractList implements ICollectio
     }
 
     @Override
-    public boolean remove(T obj) {
-        if (checkIfObjectIsNull(obj)) {
-            return false;
-        }
-        int indexRemoved = indexOf(obj);
-        remove(indexRemoved);
-        return true;
-    }
-
-    @Override
-    public boolean contains(T obj) {
-        return indexOf(obj) >= 0;
-    }
-
-    @Override
     public Object[] toArray() {
         Object[] arr = new Object[size];
         Iterator<T> it = this.iterator();
@@ -204,15 +180,6 @@ public class NonBlockingCustomList<T> extends AbstractList implements ICollectio
         }
         Node<T> nodeToBeModified = getNodeByIndex(index);
         nodeToBeModified.data = obj;
-        return true;
-    }
-
-    @Override
-    public boolean addAll(Collection<T> other) {
-        if(other == null) {
-            return false;
-        }
-        other.forEach(this::add);
         return true;
     }
 

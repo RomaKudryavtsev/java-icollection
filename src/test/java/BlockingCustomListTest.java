@@ -1,5 +1,5 @@
 import collection_domain.indexed_domain.ICollectionIndexed;
-import collection_domain.indexed_domain.array_list.CustomArray;
+import collection_domain.indexed_domain.array_list.CustomArrayList;
 import collection_domain.indexed_domain.linked_list.BlockingCustomList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,7 +63,7 @@ public class BlockingCustomListTest {
 
     @Test
     void testAddAllOnIndexMiddle() {
-        CustomArray<Integer> additionalNumbs = new CustomArray<>();
+        CustomArrayList<Integer> additionalNumbs = new CustomArrayList<>();
         Arrays.stream(arrNumbers).forEach(additionalNumbs::add);
         numbers.addAll(additionalNumbs, 1);
         Integer[] expectedNumbs = {10, 10, 7, 11, -2, 13, 10, 2000, 7, 11, -2, 13, 10, 2000};
@@ -74,7 +74,7 @@ public class BlockingCustomListTest {
 
     @Test
     void testAddAllOnIndexFirst() {
-        CustomArray<Integer> additionalNumbs = new CustomArray<>();
+        CustomArrayList<Integer> additionalNumbs = new CustomArrayList<>();
         Arrays.stream(arrNumbers).forEach(additionalNumbs::add);
         numbers.addAll(additionalNumbs, 0);
         Integer[] expectedNumbs = {10, 7, 11, -2, 13, 10, 2000, 10, 7, 11, -2, 13, 10, 2000};

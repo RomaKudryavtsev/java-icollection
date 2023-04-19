@@ -202,9 +202,6 @@ public class CustomSet<T> implements ICollection<T> {
 
     @Override
     public void clear() {
-        for (List<T> bucket : table) {
-            bucket = null;
-        }
         table = null;
         size = 0;
     }

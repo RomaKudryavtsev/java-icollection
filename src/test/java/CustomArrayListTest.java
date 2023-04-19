@@ -1,7 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import collection_domain.indexed_domain.ICollectionIndexed;
-import collection_domain.indexed_domain.array_list.CustomArray;
+import collection_domain.indexed_domain.array_list.CustomArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class CustomArrayTest {
+public class CustomArrayListTest {
     private ICollectionIndexed<Integer> numbers;
     private ICollectionIndexed<String> strings;
     private final Integer[] arrNumbers = {10, 7, 11, -2, 13, 10, 2000};
@@ -25,8 +25,8 @@ public class CustomArrayTest {
 
     @BeforeEach
     void setUp() {
-        numbers = new CustomArray<>();
-        strings = new CustomArray<>(1);
+        numbers = new CustomArrayList<>();
+        strings = new CustomArrayList<>(1);
         Arrays.stream(arrNumbers).forEach(n -> numbers.add(n));
         Arrays.stream(arrStrings).forEach(s -> strings.add(s));
     }
@@ -80,7 +80,7 @@ public class CustomArrayTest {
 
     @Test
     void testAddAllOnIndexMiddle() {
-        CustomArray<Integer> additionalNumbs = new CustomArray<>();
+        CustomArrayList<Integer> additionalNumbs = new CustomArrayList<>();
         Arrays.stream(arrNumbers).forEach(additionalNumbs::add);
         numbers.addAll(additionalNumbs, 1);
         Integer[] expectedNumbs = {10, 10, 7, 11, -2, 13, 10, 2000, 7, 11, -2, 13, 10, 2000};
@@ -91,7 +91,7 @@ public class CustomArrayTest {
 
     @Test
     void testAddAllOnIndexFirst() {
-        CustomArray<Integer> additionalNumbs = new CustomArray<>();
+        CustomArrayList<Integer> additionalNumbs = new CustomArrayList<>();
         Arrays.stream(arrNumbers).forEach(additionalNumbs::add);
         numbers.addAll(additionalNumbs, 0);
         Integer[] expectedNumbs = {10, 7, 11, -2, 13, 10, 2000, 10, 7, 11, -2, 13, 10, 2000};
@@ -211,7 +211,7 @@ public class CustomArrayTest {
     @Test
     void testRemoveOnIndex() {
         Integer[] actual = {10, 7, -2, 13, 10, 2000}; // remove on index = 2
-        assertNull(numbers.remove(100));
+        assertThrows(IllegalArgumentException.class, () -> numbers.remove(100));
         assertEquals(11, numbers.remove(2));
         assertEquals(numbers.size(), actual.length);
         for (int i = 0; i < actual.length; ++i) {
