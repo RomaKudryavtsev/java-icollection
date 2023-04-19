@@ -211,9 +211,13 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void addAll(ICollection<T> other) {
+    public boolean addAll(Collection<T> other) {
+        if(other == null) {
+            return false;
+        }
         synchronized (lock) {
-            Arrays.stream(other.toArray()).map(o -> (T) o).forEach(this::add);
+            other.forEach(this::add);
+            return true;
         }
     }
 

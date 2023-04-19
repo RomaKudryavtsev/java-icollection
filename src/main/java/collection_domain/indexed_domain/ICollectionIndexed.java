@@ -14,6 +14,8 @@ public interface ICollectionIndexed<T> extends Iterable<T>, ICollection<T> {
 
     int lastIndexOf(T obj);
 
+    boolean removeAll(T obj);
+
     T remove(int index);
 
     boolean set(T obj, int index);

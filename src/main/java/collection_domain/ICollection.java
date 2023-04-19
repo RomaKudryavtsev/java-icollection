@@ -1,5 +1,6 @@
 package collection_domain;
 
+import java.util.Collection;
 import java.util.function.Predicate;
 
 public interface ICollection<T> extends Iterable<T> {
@@ -13,9 +14,7 @@ public interface ICollection<T> extends Iterable<T> {
 
     Object[] toArray();
 
-    void addAll(ICollection<T> other);
-
-    boolean removeAll(T obj);
+    boolean addAll(Collection<T> other);
 
     boolean removeIf(Predicate<T> predicate);
 

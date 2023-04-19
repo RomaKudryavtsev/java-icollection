@@ -4,6 +4,7 @@ import collection_domain.ICollection;
 import collection_domain.indexed_domain.ICollectionIndexed;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
@@ -143,8 +144,12 @@ public class CustomArray<T> implements ICollectionIndexed<T> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void addAll(ICollection<T> other) {
-        Arrays.stream(other.toArray()).map(o -> (T) o).forEach(this::add);
+    public boolean addAll(Collection<T> other) {
+        if(other == null) {
+            return false;
+        }
+        other.forEach(this::add);
+        return true;
     }
 
     @Override
