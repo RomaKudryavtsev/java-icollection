@@ -1,4 +1,4 @@
-import collection_domain.non_indexed_domain.set.CustomSet;
+import collection_domain.set_domain.CustomSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import collection_domain.indexed_domain.ICollectionIndexed;
-import collection_domain.indexed_domain.array_list.CustomArrayList;
+import collection_domain.list_domain.ICollectionIndexed;
+import collection_domain.list_domain.array_list.CustomArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

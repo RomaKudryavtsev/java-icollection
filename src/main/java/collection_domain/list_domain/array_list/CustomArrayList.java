@@ -1,10 +1,9 @@
-package collection_domain.indexed_domain.array_list;
+package collection_domain.list_domain.array_list;
 
 import collection_domain.ICollection;
-import collection_domain.indexed_domain.AbstractList;
+import collection_domain.list_domain.AbstractList;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
@@ -202,24 +201,6 @@ public class CustomArrayList<T> extends AbstractList<T> {
     public void clear() {
         array = new Object[size];
         size = 0;
-    }
-
-    //TODO - to be implemented
-    @Override
-    public boolean containsAll(Collection<T> c) {
-        return false;
-    }
-
-    //TODO - to be implemented
-    @Override
-    public boolean retainAll(Collection<T> c) {
-        return false;
-    }
-
-    //TODO - to be implemented
-    @Override
-    public boolean removeAll(Collection<T> c) {
-        return false;
     }
 
     @Override

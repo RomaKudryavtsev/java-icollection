@@ -1,6 +1,6 @@
-import collection_domain.indexed_domain.ICollectionIndexed;
-import collection_domain.indexed_domain.array_list.CustomArrayList;
-import collection_domain.indexed_domain.linked_list.BlockingCustomList;
+import collection_domain.list_domain.ICollectionIndexed;
+import collection_domain.list_domain.array_list.CustomArrayList;
+import collection_domain.list_domain.linked_list.BlockingCustomList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package collection_domain.indexed_domain;
+package collection_domain.list_domain;
 
 import java.util.Collection;
 
@@ -50,6 +50,38 @@ public abstract class AbstractList<T> implements ICollectionIndexed<T> {
             return false;
         }
         other.forEach(this::add);
+        return true;
+    }
+
+    @Override
+    public boolean containsAll(Collection<T> c) {
+        if (c == null) {
+            return false;
+        } else {
+            return c.stream().filter(this::contains).count() == c.size();
+        }
+    }
+
+    @Override
+    public boolean retainAll(Collection<T> c) {
+        if (c == null) {
+            return false;
+        } else {
+            this.forEach(elem -> {
+                if (!c.contains(elem)) {
+                    remove(elem);
+                }
+            });
+        }
+        return true;
+    }
+
+    @Override
+    public boolean removeAll(Collection<T> c) {
+        if (c == null) {
+            return false;
+        }
+        c.forEach(this::remove);
         return true;
     }
 }

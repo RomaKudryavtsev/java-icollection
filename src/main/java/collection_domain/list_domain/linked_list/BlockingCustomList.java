@@ -1,7 +1,7 @@
-package collection_domain.indexed_domain.linked_list;
+package collection_domain.list_domain.linked_list;
 
 import collection_domain.ICollection;
-import collection_domain.indexed_domain.ICollectionIndexed;
+import collection_domain.list_domain.ICollectionIndexed;
 
 import java.util.*;
 import java.util.function.Predicate;

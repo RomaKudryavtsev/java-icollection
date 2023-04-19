@@ -1,4 +1,4 @@
-package collection_domain.non_indexed_domain.set;
+package collection_domain.set_domain;
 
 import collection_domain.ICollection;
 
@@ -168,6 +168,7 @@ public class CustomSet<T> implements ICollection<T> {
         }
     }
 
+    //TODO: to be implemented
     @Override
     public boolean removeIf(Predicate<T> predicate) {
         return false;

@@ -1,4 +1,4 @@
-package collection_domain.indexed_domain;
+package collection_domain.list_domain;
 
 import collection_domain.ICollection;
 
