@@ -143,7 +143,6 @@ public class CustomArray<T> implements ICollectionIndexed<T> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public boolean addAll(Collection<T> other) {
         if(other == null) {
             return false;
@@ -243,16 +242,19 @@ public class CustomArray<T> implements ICollectionIndexed<T> {
         size = 0;
     }
 
+    //TODO - to be implemented
     @Override
     public boolean containsAll(Collection<T> c) {
         return false;
     }
 
+    //TODO - to be implemented
     @Override
     public boolean retainAll(Collection<T> c) {
         return false;
     }
 
+    //TODO - to be implemented
     @Override
     public boolean removeAll(Collection<T> c) {
         return false;
