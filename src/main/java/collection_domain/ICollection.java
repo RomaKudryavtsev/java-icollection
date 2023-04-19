@@ -21,4 +21,10 @@ public interface ICollection<T> extends Iterable<T> {
     boolean isEmpty();
 
     void clear();
+
+    boolean containsAll(Collection<T> c);
+
+    boolean retainAll(Collection<T> c);
+
+    boolean removeAll(Collection<T> c);
 }

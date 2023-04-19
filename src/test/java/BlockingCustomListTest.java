@@ -4,7 +4,9 @@ import collection_domain.indexed_domain.linked_list.BlockingCustomList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -101,7 +103,7 @@ public class BlockingCustomListTest {
 
     @Test
     void testAddAll() {
-        CustomArray<Integer> additionalNumbs = new CustomArray<>();
+        List<Integer> additionalNumbs = new ArrayList<>();
         Arrays.stream(arrNumbers).forEach(additionalNumbs::add);
         numbers.addAll(additionalNumbs);
         Integer[] expectedNumbs = {10, 7, 11, -2, 13, 10, 2000, 10, 7, 11, -2, 13, 10, 2000};

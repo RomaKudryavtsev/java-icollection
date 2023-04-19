@@ -244,6 +244,21 @@ public class CustomArray<T> implements ICollectionIndexed<T> {
     }
 
     @Override
+    public boolean containsAll(Collection<T> c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<T> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<T> c) {
+        return false;
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new CustomIterator();
     }

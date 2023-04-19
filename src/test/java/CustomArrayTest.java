@@ -5,8 +5,10 @@ import collection_domain.indexed_domain.array_list.CustomArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -123,7 +125,7 @@ public class CustomArrayTest {
 
     @Test
     void testAddAll() {
-        CustomArray<Integer> additionalNumbs = new CustomArray<>();
+        List<Integer> additionalNumbs = new ArrayList<>();
         Arrays.stream(arrNumbers).forEach(additionalNumbs::add);
         numbers.addAll(additionalNumbs);
         Integer[] expectedNumbs = {10, 7, 11, -2, 13, 10, 2000, 10, 7, 11, -2, 13, 10, 2000};

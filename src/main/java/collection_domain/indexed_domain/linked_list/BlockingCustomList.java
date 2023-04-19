@@ -319,6 +319,21 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
     }
 
     @Override
+    public boolean containsAll(Collection<T> c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<T> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<T> c) {
+        return false;
+    }
+
+    @Override
     public Iterator<T> iterator() {
         List<T> list = new ArrayList<>();
         Node<T> current = head;

@@ -1,4 +1,6 @@
-package collection_domain.non_indexed_domain;
+package collection_domain.non_indexed_domain.set;
+
+import collection_domain.ICollection;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -6,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class CustomSet<T> implements ICollectionNonIndexed<T> {
+public class CustomSet<T> implements ICollection<T> {
     private List<T>[] table;
     private int size;
     private int capacity;
