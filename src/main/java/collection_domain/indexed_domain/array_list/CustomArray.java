@@ -1,6 +1,7 @@
 package collection_domain.indexed_domain.array_list;
 
 import collection_domain.ICollection;
+import collection_domain.indexed_domain.AbstractList;
 import collection_domain.indexed_domain.ICollectionIndexed;
 
 import java.util.Arrays;
@@ -9,10 +10,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
-public class CustomArray<T> implements ICollectionIndexed<T> {
+public class CustomArray<T> extends AbstractList implements ICollectionIndexed<T> {
     private final static int DEFAULT_CAPACITY = 16;
     private Object[] array;
-    private int size = 0;
 
     public CustomArray(int capacity) {
         array = new Object[capacity];
@@ -71,11 +71,6 @@ public class CustomArray<T> implements ICollectionIndexed<T> {
             return null;
         }
         return (T) array[index];
-    }
-
-    @Override
-    public int size() {
-        return size;
     }
 
     @Override
@@ -229,11 +224,6 @@ public class CustomArray<T> implements ICollectionIndexed<T> {
             }
         }
         return -1;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     @Override

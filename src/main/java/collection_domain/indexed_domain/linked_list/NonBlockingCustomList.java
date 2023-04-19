@@ -1,6 +1,7 @@
 package collection_domain.indexed_domain.linked_list;
 
 import collection_domain.ICollection;
+import collection_domain.indexed_domain.AbstractList;
 import collection_domain.indexed_domain.ICollectionIndexed;
 
 import java.util.Arrays;
@@ -9,8 +10,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
-public class NonBlockingCustomList<T> implements ICollectionIndexed<T> {
-    private int size;
+public class NonBlockingCustomList<T> extends AbstractList implements ICollectionIndexed<T> {
     private Node<T> head;
     private Node<T> tail;
 
@@ -103,11 +103,6 @@ public class NonBlockingCustomList<T> implements ICollectionIndexed<T> {
             }
         }
         return current;
-    }
-
-    @Override
-    public int size() {
-        return size;
     }
 
     @Override
@@ -291,11 +286,6 @@ public class NonBlockingCustomList<T> implements ICollectionIndexed<T> {
             }
         }
         return -1;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     @Override

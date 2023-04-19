@@ -29,7 +29,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
     }
 
     private boolean checkIfIndexIsIncorrect(int index) {
-        return index < 0 || index >= size;
+        return index < 0 || index >= this.size;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
                 newNode.prev = tail;
             }
             modifyTail(newNode);
-            size += 1;
+            this.size += 1;
         }
         return true;
     }
@@ -58,7 +58,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
         }
         synchronized (lock) {
             Node<T> removed = getNodeByIndex(index);
-            if (size == 1) {
+            if (this.size == 1) {
                 modifyHead(null);
                 modifyTail(null);
             } else if (removed.prev == null) {
@@ -71,7 +71,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
                 removed.next.prev = removed.prev;
                 removed.prev.next = removed.next;
             }
-            size -= 1;
+            this.size -= 1;
             return removed.data;
         }
     }
@@ -99,7 +99,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
                 modifyHead(new Node<>(obj, null, oldHead));
                 head.next = oldHead;
                 oldHead.prev = head;
-            } else if (index == size - 1) {
+            } else if (index == this.size - 1) {
                 Node<T> oldTail = tail;
                 modifyTail(new Node<>(obj, oldTail, null));
                 oldTail.next = tail;
@@ -111,7 +111,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
                 prevNode.next = newNode;
                 nodeOnIndex.prev = newNode;
             }
-            size += 1;
+            this.size += 1;
         }
         return true;
     }
@@ -129,7 +129,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
 
     @Override
     public int size() {
-        return size;
+        return this.size;
     }
 
     @Override
@@ -158,7 +158,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
     @Override
     public int lastIndexOf(T obj) {
         synchronized (lock) {
-            int index = size - 1;
+            int index = this.size - 1;
             if (checkIfObjectIsNull(obj)) {
                 for (Node<T> cur = tail; cur != null; cur = cur.prev) {
                     if (cur.data == null) {
@@ -185,7 +185,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
 
     @Override
     public Object[] toArray() {
-        Object[] arr = new Object[size];
+        Object[] arr = new Object[this.size];
         synchronized (lock) {
             Iterator<T> it = this.iterator();
             int index = 0;
@@ -226,13 +226,13 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
             return false;
         }
         synchronized (lock) {
-            int temp = size;
+            int temp = this.size;
             for (Node<T> cur = tail; cur != null; cur = cur.prev) {
                 if (cur.data.equals(obj)) {
                     removeNode(cur);
                 }
             }
-            return temp != size;
+            return temp != this.size;
         }
     }
 
@@ -252,7 +252,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
     public void sort(Comparator<T> comp) {
         synchronized (lock) {
             boolean swapped;
-            int index = size - 1;
+            int index = this.size - 1;
             do {
                 swapped = true;
                 for (int i = 0; i < index; ++i) {
@@ -269,13 +269,13 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
     @Override
     public boolean removeIf(Predicate<T> predicate) {
         synchronized (lock) {
-            int temp = size;
+            int temp = this.size;
             for (Node<T> cur = head; cur != null; cur = cur.next) {
                 if (predicate.test(cur.data)) {
                     removeNode(cur);
                 }
             }
-            return temp != size;
+            return temp != this.size;
         }
     }
 
@@ -305,7 +305,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
 
     @Override
     public boolean isEmpty() {
-        return size == 0;
+        return this.size == 0;
     }
 
     @Override
@@ -359,14 +359,14 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
             throw new IllegalArgumentException("Wrong index");
         }
         Node<T> current;
-        if (index <= size / 2) {
+        if (index <= this.size / 2) {
             current = head;
             for (int i = 0; i < index; i++) {
                 current = current.next;
             }
         } else {
             current = tail;
-            for (int i = size - 1; i > index; i--) {
+            for (int i = this.size - 1; i > index; i--) {
                 current = current.prev;
             }
         }
@@ -384,7 +384,7 @@ public class BlockingCustomList<T> implements ICollectionIndexed<T> {
             node.prev.next = node.next;
             node.next.prev = node.prev;
         }
-        size -= 1;
+        this.size -= 1;
     }
 
     private synchronized void swap(int index1, int index2) {
