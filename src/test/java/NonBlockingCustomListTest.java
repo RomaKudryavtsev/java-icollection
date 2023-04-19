@@ -1,5 +1,5 @@
+import collection_domain.indexed_domain.ICollectionIndexed;
 import collection_domain.indexed_domain.array_list.CustomArray;
-import collection_domain.ICollection;
 import collection_domain.indexed_domain.linked_list.NonBlockingCustomList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NonBlockingCustomListTest {
-    private ICollection<Integer> numbers;
+    private ICollectionIndexed<Integer> numbers;
     private final Integer[] arrNumbers = {10, 7, 11, -2, 13, 10, 2000};
     private final BiFunction<Integer, Integer, Predicate<Integer>> getPredicateSearchingNumInRange = (n1, n2) ->
             num -> num >= n1 && num < n2;

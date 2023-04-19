@@ -1,7 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import collection_domain.indexed_domain.ICollectionIndexed;
 import collection_domain.indexed_domain.array_list.CustomArray;
-import collection_domain.ICollection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +12,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class CustomArrayTest {
-    private ICollection<Integer> numbers;
-    private ICollection<String> strings;
+    private ICollectionIndexed<Integer> numbers;
+    private ICollectionIndexed<String> strings;
     private final Integer[] arrNumbers = {10, 7, 11, -2, 13, 10, 2000};
     private final String[] arrStrings = {"abc", "lmn", "qwerty", "abc"};
     private final BiFunction<Integer, Integer, Predicate<Integer>> getPredicateSearchingNumInRange = (index1, index2) ->

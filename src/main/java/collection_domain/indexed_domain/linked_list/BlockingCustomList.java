@@ -1,11 +1,12 @@
 package collection_domain.indexed_domain.linked_list;
 
 import collection_domain.ICollection;
+import collection_domain.indexed_domain.ICollectionIndexed;
 
 import java.util.*;
 import java.util.function.Predicate;
 
-public class BlockingCustomList<T> implements ICollection<T> {
+public class BlockingCustomList<T> implements ICollectionIndexed<T> {
     private volatile int size;
     private Node<T> head;
     private Node<T> tail;

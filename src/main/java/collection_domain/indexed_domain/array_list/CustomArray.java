@@ -1,13 +1,14 @@
 package collection_domain.indexed_domain.array_list;
 
 import collection_domain.ICollection;
+import collection_domain.indexed_domain.ICollectionIndexed;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
-public class CustomArray<T> implements ICollection<T> {
+public class CustomArray<T> implements ICollectionIndexed<T> {
     private final static int DEFAULT_CAPACITY = 16;
     private Object[] array;
     private int size = 0;

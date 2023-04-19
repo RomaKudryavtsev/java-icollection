@@ -1,13 +1,14 @@
 package collection_domain.indexed_domain.linked_list;
 
 import collection_domain.ICollection;
+import collection_domain.indexed_domain.ICollectionIndexed;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
-public class NonBlockingCustomList<T> implements ICollection<T> {
+public class NonBlockingCustomList<T> implements ICollectionIndexed<T> {
     private int size;
     private Node<T> head;
     private Node<T> tail;
