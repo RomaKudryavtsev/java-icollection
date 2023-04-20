@@ -224,7 +224,7 @@ public class CustomSet<T> implements ICollection<T> {
 
     @Override
     public void clear() {
-        table = null;
+        table = new LinkedList[capacity];
         size = 0;
     }
 }
